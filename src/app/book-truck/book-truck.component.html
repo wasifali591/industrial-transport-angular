@@ -1,0 +1,106 @@
+<section id="hero">
+  <div class="login-page" [@routerTransition]>
+    <nav class="nav nav-pills" *ngIf = "!loggedIn">
+      <ul class="nav-menu">
+          <li style="font-weight: 900;">TRUCKAGE</li>
+          <li><a [routerLink]="['/homepage']">{{'Home'}}</a></li>
+          <li><a [routerLink]="['/login']">{{ 'login' }}</a></li>
+          <li><a [routerLink]="['/signup']">{{ 'Register' }}</a></li>
+          <li class="menu-active"><a [routerLink]="['/bookTruck']">{{ 'Rent a Truck' }}</a></li>
+      </ul>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg fixed-top" *ngIf = "loggedIn">
+      <img src="assets/images/logotruck.png" width="40px" class="user-avatar" />&nbsp;
+      <a class="navbar-brand" style="color: white;" [routerLink]="['/bookTruck']"><b>TRUCKAGE</b></a>
+      <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+          <i class="fa fa-bars text-muted" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item dropdown" ngbDropdown>
+                  <a class="nav-link dropdown-toggle" style="width:200px;" ngbDropdownToggle>
+                      <i class="fa fa-user"></i>&nbsp;&nbsp;{{ UserName }}<b class="caret"></b>
+                  </a>
+                  <div class=" dropdown-menu" ngbDropdownMenu>
+                    <a class="dropdown-item" [routerLink]="['/customerdashboard']" ngbDropdownItem>
+                      <i class="fa fa-fw fa-user"></i> {{ 'Profile' }}
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" [routerLink]="['/changepassword']" ngbDropdownItem>
+                        <i class="fa fa-fw fa-gear"></i> {{ 'Change Password' }}
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" [routerLink]="['/login']" (click)="logout()" ngbDropdownItem>
+                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' }}
+                    </a>
+                  </div>
+              </li>
+          </ul>
+      </div>
+    </nav>
+    <h3><span class="badge badge-success">Search Truck</span></h3>
+    <div class="head-body">
+      <p style="text-align: left;"><b><i>Enter details to find the trucks.</i></b></p>
+      <form class="search-form">
+        <div class="form-row">
+          <div class="col-3">
+            <input type="text" class="form-control" placeholder="Enter Source">
+          </div>
+          <div class="col-3">
+            <input type="text" class="form-control" placeholder="Enter Destination">
+          </div>
+          <div class="col-3">
+            <select class="form-control">
+                <option *ngFor="let type of truckTypeList" >{{type}}</option>
+            </select>
+          </div>
+          <div class="col-2">
+              <div class="input-group">
+                  <input class="form-control" placeholder="Select Departure Date" ngbDatepicker #datePicker="ngbDatepicker" (click)="datePicker.toggle()" [minDate]="today">
+                  <div class="input-group-append">
+                    <button class="btn btn-light calendar" (click)="datePicker.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+            </div>
+          <div class="col-1">
+            <button type="submit" (click)="fetchTrucks()" class="form-control btn btn-dark mb-4">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <img *ngIf = "_loading" style="height: 40%; width: 15%; float: center;" class="card-img-top image-center" src='assets/images/loader/searchloader.gif' alt="No Image.">
+
+    <div class="card" *ngIf = "truckFoundError">
+      <div class="card-body">
+        Sorry! No trucks available. Please check again later.
+      </div>
+    </div>
+
+    <div class="row card-group" *ngIf = "truckDetails.length > 0">
+      <div style="margin-top:10px;" class="col-sm-3" *ngFor="let truck of truckDetails">
+        <div class="card border-primary">
+          <div class="card-header">
+            <p style="float: left;">License No. <b><i>{{truck.LicenceNumber_xt}}</i></b></p>
+            <p style="float: right; font-weight: bold;">Fare : Rs. 5000</p>
+          </div>
+          <img class="card-img-top image-center" src="assets/images/trucks/truck-0.jpg" alt="Card image cap">
+          <hr>
+          <div class="card-body">
+            <div class="card-text" style="float: left;">
+              <p>{{truck.TruckType_xt}}</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-block">Book Truck</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

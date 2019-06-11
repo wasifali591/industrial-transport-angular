@@ -1,0 +1,99 @@
+<nav style="margin: 5px;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">TRUCKAGE</span>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Notifications</a>
+      </li>
+      <li class="nav-item">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn" id="dropdownBasic1" ngbDropdownToggle>Truckage User</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>View Profile</button>
+            <div class="dropdown-divider"></div>
+            <button ngbDropdownItem>Change Password</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+</nav>
+
+
+
+<ngb-tabset>
+  
+  <!-- Tab for Trips -->
+  <ngb-tab title="Trips">
+    <ng-template ngbTabContent>
+      <div style="margin: 10px 0;" class="card">
+        <div class="card-body">
+          <ngb-tabset>
+
+            <!-- Tab for OngoingTrips -->
+            <ngb-tab title="Ongoing Trips">
+              <ng-template ngbTabContent>
+                <div style="margin: 10px 0;" class="card">
+                  <div class="card-header">
+              
+                  </div>
+                  <div class="card-body">
+                    You have no ongoing trips.
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            
+            <!-- Tab for Upcoming Trips -->
+            <ngb-tab title="Upcoming Trips">
+              <ng-template ngbTabContent>
+                <div style="margin: 10px 0;" class="card">
+                  <div class="card-header">
+              
+                  </div>
+                  <div class="card-body">
+                    You have no upcoming trips.
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            
+            <!-- Tab for Completed Trips -->
+            <ngb-tab title="Completed Trips">
+              <ng-template ngbTabContent>
+                <div style="margin: 10px 0;" class="card">
+                  <div class="card-header">
+              
+                  </div>
+                  <div class="card-body">
+                    You haven't completed any trips.
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-tab>
+
+          </ngb-tabset>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+
+  <!-- Tab for Profile -->
+  <ngb-tab title="Profile">
+    <ng-template ngbTabContent>
+      <div style="margin: 10px 0;" class="card">
+        <div class="card-body">
+          Profile Details will be displayed here.
+          <app-updateprofile></app-updateprofile>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+
+</ngb-tabset>  
+

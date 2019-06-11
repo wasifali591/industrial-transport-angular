@@ -1,0 +1,165 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Drivers'" [icon]="'fa-id-badge'"></app-page-header>
+  <button *ngIf = "!_loading" type="button" class="btn btn-primary mr-2" placement="top" ngbTooltip="You've added {{driverCount}} drivers on our system.">
+    Number of Drivers&nbsp;&nbsp;<span class="badge badge-light">{{ driverCount }}</span>
+  </button>
+  <button *ngIf = "!_loading" type="button" class="btn btn-primary mr-2 float-right" placement="top" ngbTooltip="Click here to add a driver." (click)="openRegistrationModal(registration)">
+    Add Drivers&nbsp;&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+  </button>
+
+  <!-- Registration Form Modal -->
+  <ng-template #registration let-regmodal>
+    <div class="modal-header">
+      <h4 class="modal-title">Driver Registration Form</h4>
+      <button type="button" class="close" aria-label="Close" (click)="regmodal.dismiss('Cross Click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="driverForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Driver Name*</label>
+              <input type="text" class="form-control border-input" formControlName="driverName" [ngClass]="{ 'is-invalid': fetchValue.driverName.invalid && (fetchValue.driverName.dirty || fetchValue.driverName.touched) }">
+              <div *ngIf=" fetchValue.driverName.invalid && (fetchValue.driverName.dirty || fetchValue.driverName.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.driverName.errors.required">Driver Name is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Driver License Number*</label>
+              <input type="text" class="form-control border-input" formControlName="driverLicenseNumber" [ngClass]="{ 'is-invalid': fetchValue.driverLicenseNumber.invalid && (fetchValue.driverLicenseNumber.dirty || fetchValue.driverLicenseNumber.touched) }">
+              <div *ngIf="fetchValue.driverLicenseNumber.invalid && (fetchValue.driverLicenseNumber.dirty || fetchValue.driverLicenseNumber.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.driverLicenseNumber.errors.required">Driver License Number is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Driving License Type*</label>
+              <select class="form-control" formControlName="driverLicenseType" [ngClass]="{ 'is-invalid': fetchValue.driverLicenseType.invalid && (fetchValue.driverLicenseType.dirty || fetchValue.driverLicenseType.touched) }">
+                <option *ngFor="let driver of driverType">{{driver}}</option>  
+              </select> 
+              <div *ngIf="fetchValue.driverLicenseType.invalid && (fetchValue.driverLicenseType.dirty || fetchValue.driverLicenseType.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.driverLicenseType.errors.required">Driver License Type must be selected.</div>
+                <div *ngIf="fetchValue.driverLicenseType.errors.mustSelectType">Driver License Type must be selected.</div>
+                <div *ngIf="fetchValue.driverLicenseType.errors.invalidSelect">Non-Commercial drivers cannot be added.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Driving License Issued Date*</label>
+              <div class="input-group">
+                <input class="form-control border-input" ngbDatepicker #i="ngbDatepicker" (click)="i.toggle()" readonly formControlName="licenseIssuedDate" [ngClass]="{ 'is-invalid': fetchValue.licenseIssuedDate.invalid && (fetchValue.licenseIssuedDate.dirty || fetchValue.licenseIssuedDate.touched) }">
+                <div class="input-group-append">
+                  <button  type="button" class="form-control border-input btn btn-outline-secondary calendar" (click)="i.toggle()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+                <div *ngIf="fetchValue.licenseIssuedDate.invalid && (fetchValue.licenseIssuedDate.dirty || fetchValue.licenseIssuedDate.touched)" class="invalid-feedback">
+                  <div *ngIf="fetchValue.licenseIssuedDate.errors.required">License Issued date is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Driving License Expiry Date*</label>
+              <div class="input-group">
+                <input class="form-control border-input" ngbDatepicker #e="ngbDatepicker" (click)="e.toggle()" readonly formControlName="licenseExpiryDate" [ngClass]="{ 'is-invalid': fetchValue.licenseExpiryDate.invalid && (fetchValue.licenseExpiryDate.dirty || fetchValue.licenseExpiryDate.touched) }">
+                <div class="input-group-append">
+                  <button  type="button" class="form-control border-input btn btn-outline-secondary calendar" (click)="d.toggle()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+                <div *ngIf="fetchValue.licenseExpiryDate.invalid && (fetchValue.licenseExpiryDate.dirty || fetchValue.licenseExpiryDate.touched)" class="invalid-feedback">
+                  <div *ngIf="fetchValue.licenseExpiryDate.errors.required">License Expiry Date is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <label><i>Driver Documents*</i></label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Driving License Certificate*</label>
+              <input type="file" class="form-control border-input" formControlName="driverLicense" [ngClass]="{ 'is-invalid': fetchValue.driverLicense.invalid && (fetchValue.driverLicense.dirty || fetchValue.driverLicense.touched) }">
+              <div *ngIf="fetchValue.driverLicense.invalid && (fetchValue.driverLicense.dirty || fetchValue.driverLicense.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.driverLicense.errors.required">Driver License document is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Insurance Document*</label>
+              <input type="file" class="form-control border-input" formControlName="driverInsurance" [ngClass]="{ 'is-invalid': fetchValue.driverInsurance.invalid && (fetchValue.driverInsurance.dirty || fetchValue.driverInsurance.touched) }">
+              <div *ngIf="fetchValue.driverInsurance.invalid && (fetchValue.driverInsurance.dirty || fetchValue.driverInsurance.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.driverInsurance.errors.required">Driver Insurance doument is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="regmodal.close('Close Click'); resetForm();">Close</button>
+        <button type="submit" [disabled]="driverForm.invalid" class="btn btn-info btn-fill btn-wd">Submit</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <img *ngIf = "_loading" style="height: 50%; width: 50%" class="card-img-top image-center" src='assets/images/loader/loader.gif' alt="No Image.">
+
+
+  <div class="card border-danger " *ngIf = "driverFoundError" style="margin: 5px 0;">
+    <div class="card-body text-danger font-weight-bold">
+      Oops! You haven't added any drivers. Please add drivers.
+    </div>
+  </div>
+
+  <!-- Card for Driver Details -->
+  <div class="row card-group" *ngIf = "!driverFoundError">
+    <div style="margin: 10px 0;" class="col-sm-3" *ngFor="let driver of driverDetails">
+    <div class="shadow card border-dark" style="height: 30rem;">
+      <div class="card-header">
+        {{ driver.DriverName_xt }}
+        <i class="fa fa-info-circle fa-2x float-right" aria-hidden="true" placement="left" ngbTooltip="Click here to See more about {{driver.DriverName_xt}}" (click)="openDriverDetailsModal(content)"></i>
+      </div>
+      <img style="height: 15rem; width: 99%" class="card-img-top image-center" src={{driver.driverImgSrc}} alt="No Image.">
+      <div class="card-body">
+        <div class="card-text">
+          <b>{{ driver.DriverName_xt }}&nbsp;</b>{{ driver.AboutDriver_xt }}
+        </div>
+
+        <!-- Modal for Driver Details -->
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Driver Details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross Click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Name:&nbsp;</label><b>{{ driver.DriverName_xt }}</b><br>
+            <label>About:&nbsp;</label><b>{{ driver.DriverName_xt }}&nbsp;{{ driver.AboutDriver_xt }}</b><br>
+            <label>Licence No.:&nbsp;</label><b>{{ driver.DrivingLicenceNumber_xn }}</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" (click)="modal.close('Close Click')">Close</button>
+          </div>
+        </ng-template>
+        <!-- <button type="button" class="btn btn-outline-primary btn-block" (click)="openDriverDetailsModal(content)">See more about {{ driver.driverName }}</button> -->
+      </div>
+      
+      <div class="card-footer">
+        Licence Number: <b>{{ driver.DrivingLicenceNumber_xn }}</b>
+      </div>
+    </div>
+  </div>
+  </div>
+  <ngb-pagination *ngIf = "!_loading" class="d-flex justify-content-end" [collectionSize]="size" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"></ngb-pagination>
+  <div *ngIf = "!_loading" style="margin-top:5px" class="card-header"><b>You're in page: {{page}}</b></div>
+</div>

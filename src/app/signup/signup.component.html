@@ -1,0 +1,93 @@
+<section id="hero">
+<div class="login-page" [@routerTransition]>
+    <nav class="nav nav-pills">
+        <ul class="nav-menu">
+            <li style="font-weight: 900;">TRUCKAGE</li>
+            <li><a [routerLink]="['/homepage']">Home</a></li>
+            <li><a [routerLink]="['/login']">{{ 'login' }}</a></li>
+            <li class="menu-active"><a [routerLink]="['/signup']">{{ 'Register' }}</a></li>
+            <li><a [routerLink]="['/bookTruck']">{{ 'Rent a Truck' }}</a></li>
+        </ul>
+    </nav>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <img style="margin-top: 15px;" class="user-avatar" src="assets/images/logotruck.png" width="150px" />
+            <h1>Register on Truckage</h1>
+            <form role="form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div class="form-content text-left">
+                    <p><i>Please Fill out the form to create an account.</i></p>
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-underline" formControlName="firstName" placeholder="{{ 'First Name*' }}" [ngClass]="{ 'is-invalid': fetchValue.firstName.invalid && (fetchValue.firstName.dirty ||  fetchValue.firstName.touched) }">
+                                <div *ngIf="fetchValue.firstName.invalid && (fetchValue.firstName.dirty ||  fetchValue.firstName.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.firstName.errors.required">First Name is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-underline" formControlName="lastName" placeholder="{{ 'Last Name*' }}" [ngClass]="{ 'is-invalid': fetchValue.lastName.invalid && (fetchValue.lastName.dirty || fetchValue.lastName.touched) }">
+                                <div *ngIf="fetchValue.lastName.invalid && (fetchValue.lastName.dirty || fetchValue.lastName.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.lastName.errors.required">Last Name is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-underline" formControlName="email" placeholder="{{ 'Email*' }}" [ngClass]="{ 'is-invalid': fetchValue.email.errors && (fetchValue.email.dirty || fetchValue.email.touched) }">
+                                <div *ngIf=" fetchValue.email.errors && (fetchValue.email.dirty || fetchValue.email.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.email.errors.required">Email is required.</div>
+                                    <div *ngIf="fetchValue.email.errors.email">Enter a valid email.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <select class="form-control input-underline" formControlName="userType" [ngClass]="{ 'is-invalid': fetchValue.userType.invalid && (fetchValue.userType.dirty || fetchValue.userType.touched) }">
+                                    <option class="option" *ngFor="let option of userType">{{ option }}</option> 
+                                </select>
+                                <div *ngIf="fetchValue.userType.errors && (fetchValue.userType.dirty || fetchValue.userType.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.userType.errors.mustSelect">You must Select User Type.</div>
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-underline" placeholder="{{'Company Name'}}">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control input-underline" formControlName="password" placeholder="{{ 'Password*' }}" [ngClass]="{ 'is-invalid': fetchValue.password.invalid && (fetchValue.password.dirty || fetchValue.password.touched)}">
+                                <div *ngIf="fetchValue.password.invalid && (fetchValue.password.dirty || fetchValue.password.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.password.errors.required">Password is required.</div>
+                                    <div *ngIf="fetchValue.password.errors.minlength">Password must be of at least 8 characters.</div>
+                                    <div *ngIf="fetchValue.password.errors.pattern">Password must contain any of the [! @ # $ %] special character and a number.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control input-underline" formControlName="confirmPassword" placeholder="{{ 'Confirm Password*' }}" [ngClass]="{ 'is-invalid': fetchValue.confirmPassword.invalid && (fetchValue.confirmPassword.dirty || fetchValue.confirmPassword.touched) }">
+                                <div *ngIf="fetchValue.confirmPassword.invalid && (fetchValue.confirmPassword.dirty || fetchValue.confirmPassword.touched)" class="invalid-feedback">
+                                    <div *ngIf="fetchValue.confirmPassword.errors.required">Password is required.</div>
+                                    <div *ngIf="fetchValue.confirmPassword.errors.minlength">Password must be of at least 8 characters.</div>
+                                    <div *ngIf="fetchValue.confirmPassword.errors.mustMatch">Your confirm password doesnot match with the entered password.</div>
+                                    <div *ngIf="fetchValue.confirmPassword.errors.pattern">Password must contain any of the [! @ # $ %] special character and a number.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <button [disabled]="signupForm.invalid" class="btn rounded-btn">Register</button>&nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/login']">{{ 'Login' }}</a>&nbsp;
+            </form>
+        </div>
+    </div>
+</div>
+</section>

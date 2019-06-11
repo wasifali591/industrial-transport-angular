@@ -1,0 +1,69 @@
+<header id="header">
+  <div class="container">
+
+    <div id="logo" class="pull-left">
+      <!-- <a href="#hero"><img src="assets/images/logotruck.png" alt="" title="" /></img></a> -->
+      <!-- Uncomment below if you prefer to use a text logo -->
+      <h1><a>Truckage</a></h1>
+    </div>
+
+    <nav id="nav-menu-container">
+      <ul class="nav-menu">
+        <li class="menu-active"><a [routerLink]="['/homepage']">Home</a></li>
+        <li><a [routerLink]="['/login']">{{ 'login' }}</a></li>
+        <li><a [routerLink]="['/signup']">{{ 'Register' }}</a></li>
+        <li><a href="#about">About Us</a></li>
+        <!-- <li class="menu-has-children"><a href="">Drop Down</a>
+          <ul>
+            <li><a href="#">Drop Down 1</a></li>
+            <li class="menu-has-children"><a href="#">Drop Down 2</a>
+              <ul>
+                <li><a href="#">Deep Drop Down 1</a></li>
+                <li><a href="#">Deep Drop Down 2</a></li>
+                <li><a href="#">Deep Drop Down 3</a></li>
+                <li><a href="#">Deep Drop Down 4</a></li>
+                <li><a href="#">Deep Drop Down 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Drop Down 3</a></li>
+            <li><a href="#">Drop Down 4</a></li>
+            <li><a href="#">Drop Down 5</a></li>
+          </ul>
+        </li> -->
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </nav><!-- #nav-menu-container -->
+  </div>
+</header><!-- #header -->
+
+<!--==========================
+  Hero Section
+============================-->
+<section id="hero">
+  <div class="hero-container">
+    <h1>Welcome to Truckage</h1>
+    <h2>Rent a Truck on few clicks.</h2>
+    <ul class="nav-menu">
+      <li><a [routerLink]="['/signup']" class="btn-get-started">Register Here</a></li>
+      <li><a [routerLink]="['/bookTruck']" class="btn-get-started">Rent a Truck</a></li>
+    </ul>
+    
+    
+  </div>
+</section><!-- #hero -->
+
+<main id="main">
+
+
+<!--==========================
+  Footer
+============================-->
+<footer id="footer">
+  <div class="container">
+    <div class="copyright">
+      &copy; Copyright <strong>Truckage</strong>. All Rights Reserved
+    </div>
+  </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>

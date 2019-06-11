@@ -1,0 +1,46 @@
+<section id="hero">
+<div class="login-page" [@routerTransition]>
+    <nav class="nav nav-pills">
+        <ul class="nav-menu">
+            <li style="font-weight: 900;">TRUCKAGE</li>
+            <li><a [routerLink]="['/homepage']">Home</a></li>
+            <li class="menu-active"><a [routerLink]="['/login']">{{ 'login' }}</a></li>
+            <li><a [routerLink]="['/signup']">{{ 'Register' }}</a></li>
+            <li><a [routerLink]="['/bookTruck']">{{ 'Rent a Truck' }}</a></li>
+        </ul>
+    </nav>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img style="margin-top: 15px;" src="assets/images/logotruck.png" width="150px" class="user-avatar" />
+            <h1>Log into Truckage</h1>
+            <form role="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-content text-left">
+                    <p><i>Use your credentials to login into your account.</i></p>
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    <div class="form-group">
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" formControlName="loginEmail" placeholder="{{ 'Email*' }}" [ngClass]="{ 'is-invalid': fetchValue.loginEmail.invalid && (fetchValue.loginEmail.dirty || fetchValue.loginEmail.touched) }">
+                        <div *ngIf="fetchValue.loginEmail.invalid && (fetchValue.loginEmail.dirty || fetchValue.loginEmail.touched)" class="invalid-feedback">
+                            <div *ngIf="fetchValue.loginEmail.errors.required">Email is required.</div>
+                            <div *ngIf="fetchValue.loginEmail.errors.email">Email must be valid.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" formControlName="loginPassword" placeholder="{{ 'Password*' }}" [ngClass]="{ 'is-invalid': fetchValue.loginPassword.invalid && (fetchValue.loginPassword.dirty || fetchValue.loginPassword.touched) }">
+                        <div *ngIf="fetchValue.loginPassword.invalid && (fetchValue.loginPassword.dirty || fetchValue.loginPassword.touched)" class="invalid-feedback">
+                            <div *ngIf="fetchValue.loginPassword.errors.required">Password is required.</div>
+                        </div>
+                    </div>
+                </div>
+                <button [disabled]="loginForm.invalid" class="btn rounded-btn">Login</button>&nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' }}</a>&nbsp;
+            </form>
+        </div>
+    </div>  
+</div>
+</section>
+<footer id="footer">
+    <div class="copyright">
+      &copy; Copyright <strong>Truckage</strong>. All Rights Reserved.
+    </div>
+</footer><!-- #footer -->

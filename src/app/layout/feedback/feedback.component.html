@@ -1,0 +1,18 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Feedbacks'" [icon]="'fa-comments-o'"></app-page-header>
+  <div class="card">
+    <div class="card-body font-weight-bold">
+      Your average rating: <ngb-rating  [rate]="currentRate"></ngb-rating>
+      <p class="float-right">{{ currentRate }}</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top: 5px;" >
+    <div class="card-header">
+      Latest Review
+    </div>
+    <div class="card-body" *ngFor= "let rev of review">
+      {{ rev }}
+      <hr>
+    </div>
+  </div>
+</div>

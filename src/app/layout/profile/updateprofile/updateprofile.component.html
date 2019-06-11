@@ -1,0 +1,148 @@
+<form [ngClass]="{'lock': lock}" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Company*</label>
+        <input type="text" class="form-control border-input" formControlName="companyName" placeholder="Company" [ngClass]="{ 'is-invalid': fetchValue.companyName.invalid && (fetchValue.companyName.dirty || fetchValue.companyName.touched) }">
+        <div *ngIf="fetchValue.companyName.invalid && (fetchValue.companyName.dirty || fetchValue.companyName.touched)" class="invalid-feedback">
+            <div *ngIf="fetchValue.companyName.errors.required">Company Name is required.</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-md-6">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control border-input" formControlName="email" placeholder="Email" [ngClass]="{ 'is-invalid':  fetchValue.email.errors }">
+        <div *ngIf=" fetchValue.email.errors" class="invalid-feedback">
+            <div *ngIf="fetchValue.email.errors.required">Email is required.</div>
+            <div *ngIf="fetchValue.email.errors.email">Enter a valid email.</div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Gender*</label>
+        <select class="form-control border-input" formControlName="gender" [ngClass]="{ 'is-invalid': fetchValue.gender.invalid && (fetchValue.gender.dirty || fetchValue.gender.touched) }">
+          <option *ngFor="let gender of Gender">{{ gender }}</option>
+        </select>
+        <div *ngIf="fetchValue.gender.invalid && (fetchValue.gender.dirty || fetchValue.gender.touched)" class="invalid-feedback">
+          <div *ngIf="fetchValue.gender.errors.required">Please select gender.</div>
+          <div *ngIf="fetchValue.gender.errors.mustSelectType">Gender must be selected.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Date of Birth*</label>
+        <div class="input-group">
+          <input class="form-control border-input" formControlName="dob" ngbDatepicker #datePicker="ngbDatepicker" (click)="datePicker.toggle()" placeholder="Date of Birth" [ngClass]="{ 'is-invalid': fetchValue.dob.invalid && (fetchValue.dob.dirty || fetchValue.dob.touched) }">
+          <div class="input-group-append">
+            <button type="button" class="form-control border-input btn btn-outline-secondary calendar" (click)="datePicker.toggle()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+          </div>
+          <div *ngIf="fetchValue.dob.invalid && (fetchValue.dob.dirty || fetchValue.dob.touched)" class="invalid-feedback">
+            <div *ngIf="fetchValue.dob.errors.required">Date of Birth is required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Mobile Number*</label>
+        <input type="text" class="form-control border-input" formControlName="mobileNumber" placeholder="Mobile Number" [ngClass]="{ 'is-invalid': fetchValue.mobileNumber.invalid && (fetchValue.mobileNumber.dirty || fetchValue.mobileNumber.touched) }">
+        <div *ngIf="fetchValue.mobileNumber.invalid && (fetchValue.mobileNumber.dirty || fetchValue.mobileNumber.touched)" class="invalid-feedback">
+            <div *ngIf="fetchValue.mobileNumber.errors.required">Mobile Number is required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <label>Id Type*</label>
+        <select class="form-control border-input" formControlName="idType" [ngClass]="{ 'is-invalid': fetchValue.idType.invalid && (fetchValue.idType.dirty || fetchValue.idType.touched) }">
+          <option *ngFor="let idtype of idType">{{ idtype }}</option>
+        </select>
+        <div *ngIf="fetchValue.idType.invalid && (fetchValue.idType.dirty || fetchValue.idType.touched)" class="invalid-feedback">
+          <div *ngIf="fetchValue.idType.errors.required">Please select Id Type</div>
+          <div *ngIf="fetchValue.idType.errors.mustSelectType">Id Type must be selected.</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label>Id Number*</label>
+      <input type="text" class="form-control border-input" formControlName="idNumber" placeholder="Enter Id number" [ngClass]="{ 'is-invalid': fetchValue.idNumber.invalid && (fetchValue.idNumber.dirty || fetchValue.idNumber.touched) }">
+      <div *ngIf="fetchValue.idNumber.invalid && (fetchValue.idNumber.dirty || fetchValue.idNumber.touched)" class="invalid-feedback">
+          <div *ngIf="fetchValue.idNumber.errors.required">Id Number is required.</div>
+      </div>
+    </div>
+    <!-- <div class="col-md-4">
+      <label>Upload Id*</label>
+      <input type="file" class="form-control border-input" formControlName="document" (change)="onFileChange($event)" [ngClass]="{ 'is-invalid': fetchValue.document.invalid && (fetchValue.document.dirty || fetchValue.document.touched) }" />
+      <div *ngIf="fetchValue.document.invalid && (fetchValue.document.dirty || fetchValue.document.touched)" class="invalid-feedback">
+          <div *ngIf="fetchValue.document.errors.required">Please upload your Id.</div>
+      </div>
+    </div> -->
+  </div>
+  <label>Address*</label>
+  <div style="padding:10px;" class="card content">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Locality*</label>
+          <textarea rows="2" class="form-control border-input" formControlName="locality" placeholder="Locality [For e.g: Park Street Square]" [ngClass]="{ 'is-invalid': fetchValue.locality.invalid && (fetchValue.locality.dirty || fetchValue.locality.touched) }"></textarea>
+          <div *ngIf="fetchValue.locality.invalid && (fetchValue.locality.dirty || fetchValue.locality.touched)" class="invalid-feedback">
+              <div *ngIf="fetchValue.locality.errors.required">Locality is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Landmark*</label>
+          <textarea rows="2" class="form-control border-input" formControlName="landmark" placeholder="Landmark [For e.g: Near Rising Mall]" [ngClass]="{ 'is-invalid':  fetchValue.landmark.invalid && (fetchValue.landmark.dirty || fetchValue.landmark.touched) }"></textarea>
+          <div *ngIf="fetchValue.landmark.invalid && (fetchValue.landmark.dirty || fetchValue.landmark.touched)" class="invalid-feedback">
+              <div *ngIf="fetchValue.landmark.errors.required">Landmark is required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Country*</label>
+          <input type="text" class="form-control border-input" formControlName="country" placeholder="Country" [ngClass]="{ 'is-invalid': fetchValue.country.invalid && (fetchValue.country.dirty || fetchValue.country.touched) }">
+          <div *ngIf="fetchValue.country.invalid && (fetchValue.country.dirty || fetchValue.country.touched)" class="invalid-feedback">
+              <div *ngIf="fetchValue.country.errors.required">Country is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>City*</label>
+          <input type="text" class="form-control border-input" formControlName="city" placeholder="City" [ngClass]="{ 'is-invalid': fetchValue.city.invalid && (fetchValue.city.dirty || fetchValue.city.touched) }">
+          <div *ngIf="fetchValue.city.invalid && (fetchValue.city.dirty || fetchValue.city.touched)" class="invalid-feedback">
+              <div *ngIf="fetchValue.city.errors.required">City is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Postal Code*</label>
+          <input type="number" class="form-control border-input" formControlName="postalCode" placeholder="PinCode" [ngClass]="{ 'is-invalid': fetchValue.postalCode.invalid && (fetchValue.postalCode.dirty || fetchValue.postalCode.touched) }">
+          <div *ngIf="fetchValue.postalCode.invalid && (fetchValue.postalCode.dirty || fetchValue.postalCode.touched)" class="invalid-feedback">
+              <div *ngIf="fetchValue.postalCode.errors.required">Postal Code is required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 10px;" class="text-center">
+    <button *ngIf = "lock === false" [disabled]="profileForm.invalid" type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
+    <!-- <button *ngIf = "lock === false" (click)="unlockForm()" class="btn btn-info btn-fill btn-wd">Cancel</button> -->
+  </div>
+</form>
+<div style="margin-top: 10px;" class="text-center">
+  <button title="Click here to edit your profile." *ngIf = "lock === true" class="btn btn-info btn-fill btn-wd" (click)="unlockForm()">Edit Profile</button>
+</div>

@@ -1,0 +1,149 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Trucks'" [icon]="'fa-truck'"></app-page-header>
+  <button *ngIf = "!_loading" type="button" class="btn btn-primary mr-2" placement="top" ngbTooltip="You've added {{truckCount}} trucks on our system.">
+    Number of Trucks&nbsp;&nbsp;<span class="badge badge-light">{{ truckCount }}</span>
+  </button>
+  <button *ngIf = "!_loading" type="button" class="btn btn-primary mr-2 float-right" placement="top" ngbTooltip="Click here to add a truck." (click)="openRegistrationModal(registration)">
+    Add Trucks&nbsp;&nbsp;<i class="fa fa-plus" aria-hidden="true"></i>
+  </button>
+
+  <!-- Registration Form Modal -->
+  <ng-template #registration let-regmodal>
+    <form [formGroup]="truckForm" (ngSubmit)="onSubmit()">
+      <div class="modal-header">
+        <h4 class="modal-title">Truck Registration Form</h4>
+        <button type="button" class="close" aria-label="Close" (click)="regmodal.dismiss('Cross Click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Select Truck Type*</label>
+              <select class="form-control" formControlName="truckType" [ngClass]="{ 'is-invalid': fetchValue.truckType.invalid && (fetchValue.truckType.dirty || fetchValue.truckType.touched)}">
+                <option *ngFor="let type of truckTypeList" >{{type}}</option>
+              </select> 
+              <div *ngIf="fetchValue.truckType.invalid && (fetchValue.truckType.dirty || fetchValue.truckType.touched)" class="invalid-feedback">
+                  <div *ngIf="fetchValue.truckType.errors.required">Truck Type is required.</div>
+                <div *ngIf="fetchValue.truckType.errors.mustSelect">Truck Type is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Truck Manufactured Date*</label>
+              <div class="input-group">
+                <input class="form-control border-input" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" readonly formControlName="truckManufacturedDate" [ngClass]="{ 'is-invalid': fetchValue.truckManufacturedDate.invalid && (fetchValue.truckManufacturedDate.dirty || fetchValue.truckManufacturedDate.touched) }">
+                <div class="input-group-append">
+                  <button  type="button" class="form-control border-input btn btn-outline-secondary calendar" (click)="d.toggle()"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+                <div *ngIf="fetchValue.truckManufacturedDate.invalid && (fetchValue.truckManufacturedDate.dirty || fetchValue.truckManufacturedDate.touched)" class="invalid-feedback">
+                  <div *ngIf="fetchValue.truckManufacturedDate.errors.required">Truck Manufactured Date is required.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>License Plate Number*</label>
+              <input type="text" class="form-control border-input" formControlName="licensePlateNumber" [ngClass]="{ 'is-invalid': fetchValue.licensePlateNumber.invalid && (fetchValue.licensePlateNumber.dirty || fetchValue.licensePlateNumber.touched) }"> 
+              <div *ngIf="fetchValue.licensePlateNumber.invalid && (fetchValue.licensePlateNumber.dirty || fetchValue.licensePlateNumber.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.licensePlateNumber.errors.required">License Plate Number is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <label><i>Truck Documents*</i></label>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Registration Certificate*</label>
+              <input type="file" class="form-control border-input" formControlName="registrationCertificate" [ngClass]="{ 'is-invalid': fetchValue.registrationCertificate.invalid && (fetchValue.registrationCertificate.dirty || fetchValue.registrationCertificate.touched) }">
+              <div *ngIf="fetchValue.registrationCertificate.invalid && (fetchValue.registrationCertificate.dirty || fetchValue.registrationCertificate.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.registrationCertificate.errors.required">Truck Registration Certificate is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Insurance Document*</label>
+              <input type="file" class="form-control border-input" formControlName="insuranceDocument" [ngClass]="{ 'is-invalid': fetchValue.insuranceDocument.invalid && (fetchValue.insuranceDocument.dirty || fetchValue.insuranceDocument.touched) }">
+              <div *ngIf="fetchValue.insuranceDocument.invalid && (fetchValue.insuranceDocument.dirty || fetchValue.insuranceDocument.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.insuranceDocument.errors.required">Insurance Document is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Pollution Document*</label>
+              <input type="file" class="form-control border-input" formControlName="pollutionDocument" [ngClass]="{ 'is-invalid': fetchValue.pollutionDocument.invalid && (fetchValue.pollutionDocument.dirty || fetchValue.pollutionDocument.touched)}">
+              <div *ngIf="fetchValue.pollutionDocument.invalid && (fetchValue.pollutionDocument.dirty || fetchValue.pollutionDocument.touched)" class="invalid-feedback">
+                <div *ngIf="fetchValue.pollutionDocument.errors.required">pollution Document is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="regmodal.close('Close Click'); resetForm();">Close</button>
+        <button [disabled]="truckForm.invalid" type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+      </div>
+    </form>
+  </ng-template>
+
+  <img *ngIf = "_loading" style="height: 50%; width: 50%" class="card-img-top image-center" src='assets/images/loader/loader.gif' alt="No Image.">
+
+  <div class="card border-danger " *ngIf = "truckFoundError" style="margin: 5px 0;">
+    <div class="card-body text-danger font-weight-bold">
+      Oops! You haven't added any trucks. Please add trucks.
+    </div>
+  </div>
+
+  <!-- Truck Profile Cards -->
+  <div class="row card-group" *ngIf = "!truckFoundError" style="margin: 10px 0;">
+    <div class="col-sm-3" *ngFor="let truck of truckDetails">
+    <div class="shadow card border-primary" style="height: 30rem;">
+      <div class="card-header">
+        {{ truck.TruckType_xt }}: <b><i>{{ truck.LicenceNumber_xt }}</i></b>
+        <i class="fa fa-info-circle fa-2x float-right" aria-hidden="true" placement="left" ngbTooltip="Click here to see more about {{ truck.truckName }} {{ truck.truckLicence }}" (click)="openTruckDetailsModal(content)"></i>
+      </div>
+      <img style="height: 15rem; width: 99%" class="card-img-top image-center" src={{truck.truckImgSrc}} alt="No Image.">
+      <div class="card-body">
+        <div class="card-text">
+          {{ truck.AboutTruck_xt }}
+        </div>
+
+        <!-- Modal for Truck details -->
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title">Truck Details</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross Click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label>Truck Type:&nbsp;</label><b>{{ truck.TruckType_xt }}</b><br>
+            <label>About:&nbsp;</label><b>{{ truck.AboutTruck_xt }}</b><br>
+            <label>Licence No.:&nbsp;</label><b>{{ truck.LicenceNumber_xt }}</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" (click)="modal.close('Close Click')">Close</button>
+          </div>
+        </ng-template>
+        <!-- <button type="button" class="btn btn-outline-primary btn-block" (click)="openTruckDetailsModal(content)">See more about {{ truck.truckName }}</button> -->
+      </div>
+      <div class="card-footer">
+        Licence Number: <b>{{ truck.LicenceNumber_xt }}</b>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <ngb-pagination *ngIf = "!_loading" class="d-flex justify-content-end" [collectionSize]="size" [(page)]="page" [maxSize]="5" [rotate]="true" [ellipses]="false"></ngb-pagination>
+  <div *ngIf = "!_loading" style="margin-top:5px" class="card-header"><b>You're in page: {{page}}</b></div>
+</div>
+

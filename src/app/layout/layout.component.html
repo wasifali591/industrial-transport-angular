@@ -1,0 +1,6 @@
+<app-header *ngIf = "!_loading"></app-header>
+<app-sidebar *ngIf = "!_loading" (collapsedEvent)="receiveCollapsed($event)"></app-sidebar>
+<section *ngIf = "!_loading" class="main-container" [ngClass]="{collapsed: collapedSideBar}">
+    <router-outlet></router-outlet>
+</section>
+<img *ngIf = "_loading" style="height: 50%; width: 50%" class="card-img-top image-center" src='assets/images/loader/loader.gif' alt="No Image.">
